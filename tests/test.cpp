@@ -51,6 +51,7 @@ TEST_CASE("Testing tuple interface of simple_version")
 	constexpr simple_version ver{43};
 	static_assert(ver.value() == 43);
 	static_assert(std::get<0>(ver) == 43);
+	static_assert(std::get<std::size_t>(ver) == 43);
 	static_assert(std::tuple_size_v<simple_version> == 1);
 	static_assert(std::is_same_v<std::tuple_element_t<0, simple_version>, simple_version::value_type>);
 }

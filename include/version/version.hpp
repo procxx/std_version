@@ -62,4 +62,11 @@ constexpr std::size_t get(const ::STD_VERSION_NS::simple_version &ver) noexcept
 	return ver.value();
 }
 
+template <typename T = std::size_t>
+constexpr decltype(auto) get(const ::STD_VERSION_NS::simple_version &ver) noexcept
+{
+	static_assert(std::is_same_v<T, std::size_t>, "simple_version contains only one component of type size_t");
+	return get<0>(ver);
+}
+
 } // namespace std
