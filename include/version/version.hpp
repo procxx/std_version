@@ -11,17 +11,17 @@ namespace STD_VERSION_NS {
 template <typename Impl>
 class version
 {
-	Impl value_;
 public:
+	Impl value_p; // intentionally public for constexprness
 	using value_type = Impl;
 
-	constexpr version(value_type && t) noexcept : value_{std::forward<value_type>(t)} {}
+	constexpr version(value_type && t) noexcept : value_p{std::forward<value_type>(t)} {}
 
 	constexpr auto operator <=> (const version<Impl> &ver_) const = default;
 
 	constexpr decltype(auto) value() const noexcept
 	{
-		return value_;
+		return value_p;
 	}
 };
 
