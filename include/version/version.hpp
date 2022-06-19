@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <compare>
+#include <cstddef>
 #include <memory>
 
 #ifndef STD_VERSION_NS
@@ -32,7 +33,7 @@ constexpr auto operator <=> (const Version1 &ver_1, const Version2 &ver_2) noexc
 	return ver_1.value() <=> ver_2.value();
 }
 
-using simple_version = version<unsigned int>;
+using simple_version = version<std::size_t>;
 
 } // namespace STD_VERSION_NS
 
