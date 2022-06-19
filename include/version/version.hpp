@@ -42,3 +42,24 @@ using simple_version = version<std::size_t>;
 
 } // namespace STD_VERSION_NS
 
+namespace std {
+
+template <>
+struct tuple_size<::STD_VERSION_NS:: simple_version> : std::integral_constant<std::size_t, 1> {};
+
+template <std::size_t I>
+struct tuple_element<I,::STD_VERSION_NS:: simple_version>
+{
+	static_assert(I < 2, "simple_version contains only one component");
+	using type = ::STD_VERSION_NS::version_traits<::STD_VERSION_NS::simple_version>::value_type;
+};
+
+template <std::size_t I>
+constexpr std::size_t get(const ::STD_VERSION_NS::simple_version &ver) noexcept
+{
+	static_assert(I < std::tuple_size_v<::STD_VERSION_NS::simple_version>,
+			"simple_version contains only one component");
+	return ver.value();
+}
+
+} // namespace std
