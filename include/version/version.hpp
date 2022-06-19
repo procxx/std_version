@@ -26,6 +26,11 @@ public:
 	}
 };
 
+template <typename Version>
+struct version_traits
+{
+	using value_type = typename Version::value_type;
+};
 
 template <typename Version1, typename Version2>
 constexpr auto operator <=> (const Version1 &ver_1, const Version2 &ver_2) noexcept

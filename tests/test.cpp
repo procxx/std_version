@@ -2,6 +2,8 @@
 #include <doctest/doctest.h>
 #include <version/version.hpp>
 
+#include <type_traits>
+
 #define GENERATE_COMPARISON_TEST_CASES(classname, val_less, val_eq, val_greater) \
 TEST_CASE("Comparison tests for " #classname) \
 {\
@@ -41,3 +43,4 @@ TEST_CASE("Comparison tests for " #classname) \
 
 GENERATE_COMPARISON_TEST_CASES(STD_VERSION_NS ::simple_version, 1, 2, 3)
 
+static_assert(std::is_same_v<::STD_VERSION_NS::version_traits<::STD_VERSION_NS::simple_version>::value_type, std::size_t>);
