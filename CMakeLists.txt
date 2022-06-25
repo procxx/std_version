@@ -15,6 +15,7 @@ target_include_directories(std_version INTERFACE "${CMAKE_SOURCE_DIR}/include")
 target_compile_features(std_version INTERFACE cxx_std_20)
 
 if (STD_VERSION_ENABLE_TESTS)
+  enable_testing()
   add_subdirectory("tests")
 endif()
 
