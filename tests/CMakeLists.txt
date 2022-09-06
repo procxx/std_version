@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0+ OR BlueOak-1.0.0+
+
 enable_testing()
 find_package(doctest REQUIRED)
 

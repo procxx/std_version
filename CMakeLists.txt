@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: BSL-1.0+ OR BlueOak-1.0.0+
+
 cmake_minimum_required(VERSION 3.20)
 project(std_version VERSION 0.0.1 LANGUAGES CXX)
 
