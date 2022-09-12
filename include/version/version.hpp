@@ -5,6 +5,8 @@
 #include <cstddef>
 #include <memory>
 
+#pragma once
+
 #ifndef LB_STD_VERSION_NS
 #define LB_STD_VERSION_NS lbstd
 #endif
