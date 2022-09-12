@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: BSL-1.0+ OR BlueOak-1.0.0+
+
 #include <algorithm>
 #include <compare>
 #include <cstddef>
