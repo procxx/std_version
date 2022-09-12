@@ -8,8 +8,13 @@
 
 #include <type_traits>
 
+#define MAKE_STRING(q) #q
+#define UNPACK_MACRO(q) q
+#define MAKE_STRING_FROM_MACRO(q) MAKE_STRING(q)
+
+
 #define GENERATE_COMPARISON_TEST_CASES(classname, val_less, val_eq, val_greater) \
-TEST_CASE("Comparison tests for " #classname) \
+TEST_CASE("Comparison tests for " MAKE_STRING_FROM_MACRO(classname)) \
 {\
 	classname ver{(val_eq)}, ver_eq{(val_eq)}, ver_less{(val_less)}, ver_greater{(val_greater)}; \
 	SUBCASE("equal") \
