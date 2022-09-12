@@ -43,13 +43,13 @@ TEST_CASE("Comparison tests for " #classname) \
 	} \
 }
 
-GENERATE_COMPARISON_TEST_CASES(STD_VERSION_NS ::simple_version, 1, 2, 3)
+GENERATE_COMPARISON_TEST_CASES(LB_STD_VERSION_NS ::simple_version, 1, 2, 3)
 
-static_assert(std::is_same_v<::STD_VERSION_NS::version_traits<::STD_VERSION_NS::simple_version>::value_type, std::size_t>);
+static_assert(std::is_same_v<::LB_STD_VERSION_NS::version_traits<::LB_STD_VERSION_NS::simple_version>::value_type, std::size_t>);
 
 TEST_CASE("Testing tuple interface of simple_version")
 {
-	using namespace STD_VERSION_NS;
+	using namespace LB_STD_VERSION_NS;
 	constexpr simple_version ver{43};
 	static_assert(ver.value() == 43);
 	static_assert(std::get<0>(ver) == 43);
