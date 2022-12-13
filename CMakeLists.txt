@@ -1,4 +1,6 @@
-# SPDX-License-Identifier: BSL-1.0+ OR BlueOak-1.0.0+
+# SPDX-FileCopyrightText: 2022 leha-bot and contributors
+#
+# SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
 cmake_minimum_required(VERSION 3.20)
 project(lbstd_version VERSION 0.0.1 LANGUAGES CXX)

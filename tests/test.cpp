@@ -1,4 +1,6 @@
-// SPDX-License-Identifier: BSL-1.0+ OR BlueOak-1.0.0+
+// SPDX-FileCopyrightText: 2022 leha-bot and contributors
+//
+// SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include <doctest/doctest.h>

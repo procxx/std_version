@@ -1,0 +1,8 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: std_version
+Upstream-Contact: leha-bot <leha-bot@users.noreply.github.com>
+Source: https://github.com/leha-bot/std_version
+
+Files: *.md
+Copyright: 2022 leha-bot and contributors
+License: BSL-1.0 OR BlueOak-1.0.0
