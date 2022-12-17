@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2022 leha-bot and contributors
+#
+# SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
+
+name: REUSE Compliance
+
+on:
+  push:
+    branches:
+      - 'master'
+  pull_request:
+    branches:
+      - 'master'
+
+jobs:
+  check:
+    name: REUSE compliance check
+    runs-on: ubuntu-latest
+    steps:
+    - name: Fetching sources
+      uses: actions/checkout@v3
+    - name: Checking REUSE compliance
+      uses: fsfe/reuse-action@v1
