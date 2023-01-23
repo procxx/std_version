@@ -28,7 +28,7 @@ jobs:
     
     # Install conan
     - name: Get Conan
-      uses: turtlebrowser/get-conan@v1.1
+      uses: turtlebrowser/get-conan@v1.2
       
       # Install dependencies in the same build folder as will be used in CMake. This path also will be used for CMake's find_package() mode
       # via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH.
