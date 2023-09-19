@@ -5,8 +5,8 @@
 [requires]
 fmt/8.1.1
 
-[build_requires]
+[test_requires]
 doctest/2.4.9
 
 [generators]
-cmake_find_package_multi
+CMakeDeps
