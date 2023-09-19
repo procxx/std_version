@@ -5,6 +5,8 @@
 enable_testing()
 find_package(doctest REQUIRED)
 
+include(doctest)
+
 add_executable(lbstd_version_tests test.cpp)
 target_link_libraries(lbstd_version_tests doctest::doctest lbstd_version)
 
