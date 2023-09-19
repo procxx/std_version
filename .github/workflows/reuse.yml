@@ -18,6 +18,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Fetching sources
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     - name: Checking REUSE compliance
       uses: fsfe/reuse-action@v1
