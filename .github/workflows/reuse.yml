@@ -20,4 +20,4 @@ jobs:
     - name: Fetching sources
       uses: actions/checkout@v4
     - name: Checking REUSE compliance
-      uses: fsfe/reuse-action@v1
+      uses: fsfe/reuse-action@v2
