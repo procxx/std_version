@@ -29,18 +29,22 @@ jobs:
     # Install conan
     - name: Get Conan
       uses: turtlebrowser/get-conan@v1.2
+
+      # Detect the build profile for futher Conan interactions.
+    - name: Detect Conan build profile
+      run: conan profile detect
       
       # Install dependencies in the same build folder as will be used in CMake. This path also will be used for CMake's find_package() mode
       # via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH.
     - name: Install dependencies
-      run: conan install . --build=missing -if ${{github.workspace}}/build -s build_type=${{env.BUILD_TYPE}}
+      run: conan install . --build=missing -of ${{github.workspace}}/conan-deps -s build_type=${{env.BUILD_TYPE}}
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       # Also set PREFIX and MODULE paths for find_package() via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH variables.
       # See https://cmake.org/cmake/help/latest/command/find_package.html?highlight=find_package for search modes.
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{github.workspace}}/build -DCMAKE_MODULE_PATH=${{github.workspace}}/build
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DCMAKE_PREFIX_PATH=${{github.workspace}}/conan-deps -DCMAKE_MODULE_PATH=${{github.workspace}}/conan-deps
 
     - name: Build
       # Build your program with the given configuration
