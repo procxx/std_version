@@ -1,0 +1,20 @@
+# SPDX-FileCopyrightText: 2022 leha-bot and contributors
+#
+# SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
+
+name: commitlint
+on:
+  push:
+  pull_request:
+    branches: [ master, dev ]
+
+jobs:
+  commitlint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Commitlint
+        uses: remarkablemark/commitlint@v1
