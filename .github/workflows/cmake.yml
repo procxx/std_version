@@ -6,10 +6,23 @@ name: CMake + Conan
 
 on:
   push:
-    branches: [ "master" ]
+    branches:
+      - '**'
+    paths:
+      - '.github/workflows/**'
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
+      - '**/CMakeLists.txt'
   pull_request:
-    branches: [ "master" ]
-
+    branches:
+      - 'master'
+    paths:
+      - '.github/workflows/**'
+      - 'include/**'
+      - 'src/**'
+      - 'tests/**'
+      - '**/CMakeLists.txt'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
