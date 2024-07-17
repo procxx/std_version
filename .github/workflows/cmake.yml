@@ -43,11 +43,11 @@ jobs:
     runs-on: ${{ matrix.system }}
 
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v4
 
-    # Install conan
-    - name: Get Conan
-      uses: turtlebrowser/get-conan@v1.2
+    - name: Setup Conan
+      uses: imesense/gha-setup-conan@v0.1
 
       # Detect the build profile for futher Conan interactions.
     - name: Detect Conan build profile
