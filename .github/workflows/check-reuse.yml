@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
-name: REUSE Compliance
+name: 'Check compliance'
 
 on:
   push:
@@ -14,10 +14,13 @@ on:
 
 jobs:
   check:
-    name: REUSE compliance check
+    name: 'Check'
+
     runs-on: ubuntu-latest
+
     steps:
-    - name: Fetching sources
-      uses: actions/checkout@v4
-    - name: Checking REUSE compliance
-      uses: fsfe/reuse-action@v3
+      - name: Fetching sources
+        uses: actions/checkout@v4
+
+      - name: Check compliance
+        uses: fsfe/reuse-action@v3

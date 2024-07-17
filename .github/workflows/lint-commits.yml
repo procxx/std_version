@@ -2,19 +2,28 @@
 #
 # SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
-name: commitlint
+name: 'Lint commits'
+
 on:
   push:
+    branches:
+      - '**'
   pull_request:
-    branches: [ master, dev ]
+    branches:
+      - master
+      - dev
 
 jobs:
-  commitlint:
+  lint:
+    name: 'Lint'
+
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Commitlint
+
+      - name: Lint
         uses: remarkablemark/commitlint@v1
