@@ -24,6 +24,10 @@ on:
       - 'tests/**'
       - '**/CMakeLists.txt'
 
+defaults:
+  run:
+    shell: sh
+
 jobs:
   build:
     name: 'Build'
@@ -43,34 +47,60 @@ jobs:
     runs-on: ${{ matrix.system }}
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-    - name: Setup Conan
-      uses: imesense/gha-setup-conan@v0.1
+      - name: Setup Conan
+        uses: imesense/gha-setup-conan@v0.1
 
-      # Detect the build profile for futher Conan interactions.
-    - name: Detect Conan build profile
-      run: conan profile detect
+      # Detect the build profile for futher Conan interactions
+      - name: Detect build profile
+        run: |
+          conan profile detect
 
       # Install dependencies in the same build folder as will be used in CMake. This path also will be used for CMake's find_package() mode
-      # via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH.
-    - name: Install dependencies
-      run: conan install . --build=missing -of ${{github.workspace}}/conan-deps -s build_type=${{ matrix.config }}
+      # via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH
+      - name: Install dependencies
+        run: |
+          conan install . \
+            --build=missing \
+            -of conan-deps \
+            -s build_type=${{ matrix.config }}
 
-    - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
-      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      # Also set PREFIX and MODULE paths for find_package() via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH variables.
-      # See https://cmake.org/cmake/help/latest/command/find_package.html?highlight=find_package for search modes.
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{ matrix.config }} -DCMAKE_PREFIX_PATH="${{github.workspace}}/conan-deps" -DCMAKE_MODULE_PATH="${{github.workspace}}/conan-deps"
+      - name: Set path (Windows)
+        if: ${{ runner.os == 'Windows' }}
+        shell: pwsh
+        run: |
+          $github_workspace = "${{ github.workspace }}"
+          $workspace = ($github_workspace -replace '\\','/')
+          Add-Content -Path $env:GITHUB_ENV -Value "workspace=$workspace"
 
-    - name: Build
-      # Build your program with the given configuration
-      run: cmake --build ${{github.workspace}}/build --config ${{ matrix.config }}
+      - name: Set path (macOS/Linux)
+        if: ${{ runner.os != 'Windows' }}
+        run: |
+          export workspace=${{ github.workspace }}
+          echo "workspace=$workspace" >> $GITHUB_ENV
 
-    - name: Test
-      working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.  
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
-      run: ctest -C ${{ matrix.config }}
+      - name: Configure project
+        # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
+        # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
+        # Also set PREFIX and MODULE paths for find_package() via CMAKE_MODULE_PATH and CMAKE_PREFIX_PATH variables.
+        # See https://cmake.org/cmake/help/latest/command/find_package.html?highlight=find_package for search modes.
+        run: |
+          cmake -B ${{ env.workspace }}/build \
+            -DCMAKE_BUILD_TYPE=${{ matrix.config }} \
+            -DCMAKE_PREFIX_PATH="${{ env.workspace }}/conan-deps" \
+            -DCMAKE_MODULE_PATH="${{ env.workspace }}/conan-deps"
+
+      - name: Build project
+        working-directory: ${{ env.workspace }}/build
+        # Build your program with the given configuration
+        run: |
+          cmake --build . --config ${{ matrix.config }}
+
+      - name: Test project
+        working-directory: ${{ env.workspace }}/build
+        # Execute tests defined by the CMake configuration.
+        # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
+        run: |
+          ctest -C ${{ matrix.config }}
