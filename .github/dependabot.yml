@@ -3,8 +3,16 @@
 # SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
 version: 2
+
 updates:
+  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
+    target-branch: master
+    groups:
+      actions-minor:
+        update-types:
+          - minor
+          - patch
