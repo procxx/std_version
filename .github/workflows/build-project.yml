@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
-name: CMake + Conan
+name: 'Build project'
 
 on:
   push:
@@ -49,6 +49,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Conan
         uses: imesense/gha-setup-conan@v0.1
