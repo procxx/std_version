@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2022 leha-bot and contributors
+# SPDX-FileCopyrightText: 2022-2025 leha-bot and contributors
 #
 # SPDX-License-Identifier: BSL-1.0 OR BlueOak-1.0.0
 
@@ -10,20 +10,41 @@ on:
       - '**'
   pull_request:
     branches:
-      - master
-      - dev
+      - 'master'
+      - 'dev'
 
 jobs:
-  lint:
-    name: 'Lint'
+  lint-commits:
+    name: 'Lint commits'
 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        system:
+          - ubuntu-24.04
+
+    runs-on: ${{ matrix.system }}
 
     steps:
+      # Checkout whole repository
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Lint
+      # Get parent branch name for comparing on `push` event
+      - name: Get branch (push)
+        if: github.event_name == 'push'
+        run: |
+          echo "branch=remotes/origin/${{ github.event.repository.default_branch }}" >> $GITHUB_ENV
+
+      # Get parent branch name for comparing on `pull_request` event
+      - name: Get branch (pull_request)
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "branch=remotes/origin/${{ github.event.pull_request.base.ref }}" >> $GITHUB_ENV
+
+      # Run commit linter from parent branch
+      - name: Lint commits
         uses: remarkablemark/commitlint@v1
+        with:
+          from: ${{ env.branch }}
